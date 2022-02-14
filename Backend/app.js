@@ -17,7 +17,7 @@ app.use("/movies", router);
 
 mongoose
   .connect(
-    "mongodb+srv://ygupta:YOGESHg24@cluster0.3wk3i.mongodb.net/movieStore?retryWrites=true&w=majority"
+    "mongodb+srv://<username>:<password>@cluster0.3wk3i.mongodb.net/<DBName>?retryWrites=true&w=majority"
   )
   .then(() => console.log("Connected"))
   .then(() => {
