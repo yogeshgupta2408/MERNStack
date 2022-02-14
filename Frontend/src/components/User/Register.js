@@ -1,10 +1,9 @@
 import { Box, Button, FormLabel, Link, TextField } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
- const history = useNavigate();
+  const history = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -18,20 +17,27 @@ const Register = () => {
     }));
   };
 
-  const sendRequest = async () => {
-    await axios
-      .post("http://localhost:5000/users/register", {
-        name: String(inputs.name),
-        email: String(inputs.email),
-        password: String(inputs.password),
-      })
-      .then((res) => res.data);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    sendRequest().then(() => history("/signin"));
+    const { name, email, password } = inputs;
+    const res = await fetch("http://localhost:5000/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    });
+    const data = await res.json();
+    if (res.status === 422 || !data) {
+      window.alert("Invalid Details");
+    } else {
+      window.alert("Successful");
+      history("/signin");
+    }
   };
 
   return (
