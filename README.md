@@ -1,1 +1,1 @@
-# MERNStack
+# MovieStore MERN Crud Application 
